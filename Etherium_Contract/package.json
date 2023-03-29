@@ -1,15 +1,3 @@
-package name: (hello-world)
-version: (1.0.0)
-description: Hello World smart contract
-entry point: (index.js)
-test command:
-git repository:
-keywords:
-authors: Dhruv Sagar, Pablo Araujo
-license: (ISC)
-
-About to write to C:\Users\dhruv\OneDrive - Wilfrid Laurier University\Work\CP 400S\final project\Blockchain-DNS\Etherium_Contract
-
 {
     "name": "hello-world",
     "version": "1.0.0",
@@ -19,5 +7,9 @@ About to write to C:\Users\dhruv\OneDrive - Wilfrid Laurier University\Work\CP 4
         "test": "echo \"Error: no test specified\" && exit 1"
     },
     "author": "Dhruv Sagar, Pablo Araujo",
-    "license": "ISC"
+    "license": "ISC",
+    "devDependencies": {
+        "@nomiclabs/hardhat-ethers": "^2.2.2",
+        "ethers": "^5.7.2"
+    }
 }

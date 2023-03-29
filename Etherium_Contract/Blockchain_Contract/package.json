@@ -1,0 +1,19 @@
+{
+  "name": "blockchain_contract",
+  "version": "1.0.0",
+  "description": "The contract for the BlockChain-DNS project",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Dhruv Sagar, Pablo Araujo",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.0.3"
+  },
+  "devDependencies": {
+    "@nomiclabs/hardhat-ethers": "^2.2.2",
+    "ethers": "^5.7.2"
+  }
+}
