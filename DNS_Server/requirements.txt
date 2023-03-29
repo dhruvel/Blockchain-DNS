@@ -1,1 +1,6 @@
-scapy
+dnslib==0.9.20
+    # via dnserver (pyproject.toml)
+tomli==2.0.1 ; python_version < "3.11"
+    # via dnserver (pyproject.toml)
+typing-extensions==4.3.0 ; python_version < "3.8"
+    # via dnserver (pyproject.toml)
