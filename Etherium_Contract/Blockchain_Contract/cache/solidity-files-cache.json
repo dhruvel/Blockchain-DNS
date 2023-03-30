@@ -6,7 +6,7 @@
       "contentHash": "b341bc59174873c7e69c03b54fea29e8",
       "sourceName": "contracts/blockchain_contract.sol",
       "solcConfig": {
-        "version": "0.8.18",
+        "version": "0.7.3",
         "settings": {
           "optimizer": {
             "enabled": false,
