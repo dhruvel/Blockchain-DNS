@@ -94,6 +94,7 @@ body {
     )
     rgb(var(--background-start-rgb));
   font: 400 1rem/1.5 'Inter', sans-serif;
+  min-width: 700px;
 }
 
 a {

@@ -1,8 +1,25 @@
 .main {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
   align-items: center;
-  padding: 6rem 0;
+  padding: 3rem 0;
   min-height: 100vh;
+}
+
+.main h1 {
+  font-size: 4rem;
+  font-weight: 500;
+  background: -webkit-linear-gradient(white, cyan, orchid, yellow, greenyellow);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: infinite alternate-reverse ease-in-out 8s rainbow;
+}
+
+@keyframes rainbow {
+  0% {
+    background-position-y: -22px;
+  }
+  100% {
+    background-position-y: 23px;
+  }
 }

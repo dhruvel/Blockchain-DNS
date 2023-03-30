@@ -1,15 +1,23 @@
-.blockCarousel {
+.blockCarouselContainer {
     --blockWidth: 500px;
     --blockHeight: 300px;
 
     display: flex;
     flex-direction: row;
-    justify-content: center;
     align-items: center;
     width: 100%;
     background-color: #000000;
-
+    margin: 3rem 0;
     overflow: hidden;
+}
+
+.blockCarousel {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    background-color: #000000;
+    width: calc(100% - 240px);
+    margin: auto;
 }
 
 .block {
@@ -20,6 +28,50 @@
     border: 1px solid #ffffff;
     border-radius: 10px;
     padding: 10px 30px 10px 30px;
+    margin: 0 30px 0 30px;
+    user-select: none;
+    transition: translate 500ms ease-in-out, border-top-color 500ms ease-in-out, border-right-color 500ms ease-in-out, border-bottom-color 500ms ease-in-out, border-left-color 500ms ease-in-out;
+}
+
+.block.active {
+    border-top-color: cyan;
+    border-right-color: orchid;
+    border-bottom-color: yellow;
+    border-left-color: greenyellow;
+    animation: infinite 8s 1s border-glow;
+}
+
+@keyframes border-glow {
+    0% {
+        border-top-color: cyan;
+        border-right-color: orchid;
+        border-bottom-color: yellow;
+        border-left-color: greenyellow;
+    }
+    25% {
+        border-top-color: greenyellow;
+        border-right-color: cyan;
+        border-bottom-color: orchid;
+        border-left-color: yellow;
+    }
+    50% {
+        border-top-color: yellow;
+        border-right-color: greenyellow;
+        border-bottom-color: cyan;
+        border-left-color: orchid;
+    }
+    75% {
+        border-top-color: orchid;
+        border-right-color: yellow;
+        border-bottom-color: greenyellow;
+        border-left-color: cyan;
+    }
+    100% {
+        border-top-color: cyan;
+        border-right-color: orchid;
+        border-bottom-color: yellow;
+        border-left-color: greenyellow;
+    }
 }
 
 .block .domain {
@@ -41,6 +93,91 @@
     font-weight: 300;
 }
 
+.block .info-row + .info-row {
+    margin-top: 10px;
+}
+
 .block .info-row svg {
     margin-right: 10px;
+}
+
+.block .info-row .info {
+    overflow-x: hidden;
+    text-overflow: ellipsis;
+}
+
+.blockCarouselContainer .carousel-control {
+    z-index: 1;
+    min-width: 70px;
+    height: 70px;
+    background-color: cyan;
+    border-radius: 50%;
+    border: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.blockCarouselContainer .carousel-control:hover {
+    background-color: cyan;
+    animation: infinite 3s rainbow;
+}
+
+@keyframes rainbow {
+    0% {
+        background-color: cyan;
+    }
+    25% {
+        background-color: orchid;
+    }
+    50% {
+        background-color: yellow;
+    }
+    75% {
+        background-color: greenyellow;
+    }
+    100% {
+        background-color: cyan;
+    }
+}
+
+.carousel-control.prev {
+    margin-left: 50px;
+}
+
+.carousel-control.next {
+    margin-right: 50px;
+}
+
+.carousel-control.disabled {
+    visibility: hidden;
+}
+
+.loading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 5rem 0;
+    background-color: #000000;
+    animation: infinite 2s alternate-reverse ease-in-out rotate;
+}
+
+@keyframes rotate {
+    0% {
+        transform: rotate(0deg);
+        color: white;
+    }
+    25% {
+        color: cyan;
+    }
+    50% {
+        color: orchid;
+    }
+    75% {
+        color: yellow;
+    }
+    100% {
+        transform: rotate(1440deg);
+        color: greenyellow;
+    }
 }
