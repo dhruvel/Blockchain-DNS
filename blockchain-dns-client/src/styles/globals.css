@@ -107,3 +107,66 @@ a {
     color-scheme: dark;
   }
 }
+
+.rainbow-bg:hover {
+  animation: infinite 3s rainbow;
+}
+
+@keyframes rainbow {
+  0% {
+      background-color: cyan;
+  }
+  25% {
+      background-color: orchid;
+  }
+  50% {
+      background-color: yellow;
+  }
+  75% {
+      background-color: greenyellow;
+  }
+  100% {
+      background-color: cyan;
+  }
+}
+
+.border-glow, .border-glow-focus:focus {
+  border-top-color: cyan;
+  border-right-color: orchid;
+  border-bottom-color: yellow;
+  border-left-color: greenyellow;
+  animation: infinite 8s border-glow;
+}
+
+@keyframes border-glow {
+  0% {
+      border-top-color: cyan;
+      border-right-color: orchid;
+      border-bottom-color: yellow;
+      border-left-color: greenyellow;
+  }
+  25% {
+      border-top-color: greenyellow;
+      border-right-color: cyan;
+      border-bottom-color: orchid;
+      border-left-color: yellow;
+  }
+  50% {
+      border-top-color: yellow;
+      border-right-color: greenyellow;
+      border-bottom-color: cyan;
+      border-left-color: orchid;
+  }
+  75% {
+      border-top-color: orchid;
+      border-right-color: yellow;
+      border-bottom-color: greenyellow;
+      border-left-color: cyan;
+  }
+  100% {
+      border-top-color: cyan;
+      border-right-color: orchid;
+      border-bottom-color: yellow;
+      border-left-color: greenyellow;
+  }
+}

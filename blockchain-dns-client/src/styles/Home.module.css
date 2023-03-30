@@ -12,10 +12,10 @@
   background: -webkit-linear-gradient(white, cyan, orchid, yellow, greenyellow);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  animation: infinite alternate-reverse ease-in-out 8s rainbow;
+  animation: infinite alternate-reverse ease-in-out 8s titleRainbow;
 }
 
-@keyframes rainbow {
+@keyframes titleRainbow {
   0% {
     background-position-y: -22px;
   }

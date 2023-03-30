@@ -62,7 +62,7 @@ export default function BlockCarousel() {
     return (
         <div className={styles.blockCarouselContainer}>
             <button
-                className={`${styles['carousel-control']} ${styles.prev} ${translateX <= -(blocks.length - 1) ? styles.disabled : ''}`}
+                className={`${styles['carousel-control']} rainbow-bg ${styles.prev} ${translateX <= -(blocks.length - 1) ? styles.disabled : ''}`}
                 onClick={() => {
                     if (translateX > -(blocks.length - 1)) {
                         setTranslateX(translateX - 1);
@@ -74,10 +74,9 @@ export default function BlockCarousel() {
             <div className={styles.blockCarousel}>
                 {
                     blocks.map((block, index) => (
-                        <div key={block.hash} className={`${styles.block} ${blocks.length - 1 + translateX === index ? styles.active : '' }`} style={{
+                        <div key={block.hash} className={`${styles.block} ${blocks.length - 1 + translateX === index ? 'border-glow' : '' }`} style={{
                             translate: `calc(((-250px - 30px) * ${blocks.length - 1}) + ((-500px - 60px) * ${translateX}))`
                         }}>
-                            { console.log(blocks.length - 1 + translateX) }
                             <span className={styles.domain}>{block.domain}</span>
                             <span className={styles.ip}>{block.ip}</span>
                             <div className={styles['info-row']}>
@@ -97,7 +96,7 @@ export default function BlockCarousel() {
                 }
             </div>
             <button
-                className={`${styles['carousel-control']} ${styles.next} ${translateX >= 0 ? styles.disabled : ''}`}
+                className={`${styles['carousel-control']} rainbow-bg ${styles.next} ${translateX >= 0 ? styles.disabled : ''}`}
                 onClick={() => {
                     if (translateX < 0) {
                         setTranslateX(translateX + 1);

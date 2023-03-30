@@ -1,39 +1,33 @@
 import styles from '@/styles/AddBlockForm.module.css';
 
+const handleSubmit = (e) => {
+    e.preventDefault();
+};
+
 export default function AddBlockForm() {
     return (
-        <div className={styles.container}>
-            <div className={styles.form}>
-                <div className={styles.input}>
-                    <label htmlFor="domain">Domain</label>
-                    <input type="text" id="domain" name="domain" />
-                </div>
-                <div className={styles.input}>
-                    <label htmlFor="ip">IP</label>
-                    <input type="text" id="ip" name="ip" />
-                </div>
-                <div className={styles.input}>
-                    <label htmlFor="ipType">IP Type</label>
-                    <input type="text" id="ipType" name="ipType" />
-                </div>
-                <div className={styles.input}>
-                    <label htmlFor="ownerId">Owner ID</label>
-                    <input type="text" id="ownerId" name="ownerId" />
-                </div>
-                <div className={styles.input}>
-                    <label htmlFor="authCompanyId">Auth Company ID</label>
-                    <input type="text" id="authCompanyId" name="authCompanyId" />
-                </div>
-                <div className={styles.input}>
-                    <label htmlFor="timestamp">Timestamp</label>
-                    <input type="text" id="timestamp" name="timestamp" />
-                </div>
-                <div className={styles.input}>
-                    <label htmlFor="expiry">Expiry</label>
-                    <input type="text" id="expiry" name="expiry" />
-                </div>
-                <button className={styles.submit}>Submit</button>
+        <form className={styles.formContainer}>
+            <div className={styles.input}>
+                <label htmlFor="domain">Domain</label>
+                <input type="text" id="domain" name="domain" className='border-glow-focus' />
             </div>
-        </div>
+            <div className={styles.input}>
+                <label htmlFor="ip">IP Address</label>
+                <input type="text" id="ip" name="ip" className='border-glow-focus' />
+            </div>
+            <div className={styles.input}>
+                <label htmlFor="ownerId">Owner ID</label>
+                <input type="text" id="ownerId" name="ownerId" className='border-glow-focus' />
+            </div>
+            <div className={styles.input}>
+                <label htmlFor="authCompanyId">Auth Company ID</label>
+                <input type="text" id="authCompanyId" name="authCompanyId" disabled />
+            </div>
+            <div className={styles.input}>
+                <label htmlFor="expiry">Expiry (Months)</label>
+                <input type="text" id="expiryMonths" name="expiry" className='border-glow-focus' />
+            </div>
+            <button className={`${styles.submit} rainbow-bg`} onClick={handleSubmit.bind(this)}>Submit</button>
+        </form>
     );
 }
