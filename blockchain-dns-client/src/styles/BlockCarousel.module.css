@@ -88,32 +88,3 @@
 .carousel-control.disabled {
     visibility: hidden;
 }
-
-.loading {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 5rem 0;
-    background-color: #000000;
-    animation: infinite 2s alternate-reverse ease-in-out rotate;
-}
-
-@keyframes rotate {
-    0% {
-        transform: rotate(0deg);
-        color: white;
-    }
-    25% {
-        color: cyan;
-    }
-    50% {
-        color: orchid;
-    }
-    75% {
-        color: yellow;
-    }
-    100% {
-        transform: rotate(1440deg);
-        color: greenyellow;
-    }
-}

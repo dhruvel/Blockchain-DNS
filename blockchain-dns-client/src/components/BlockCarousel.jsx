@@ -55,7 +55,7 @@ export default function BlockCarousel() {
 
     if(blocks.length === 0) {
         return (
-            <VscLoading className={styles.loading} size={124} />
+            <VscLoading className='loading-circle' size={124} />
         );
     }
 
