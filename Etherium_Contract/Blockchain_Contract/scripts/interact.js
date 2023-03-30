@@ -6,6 +6,7 @@ const CONTRACT_ADDRESS = process.env.CONTRACT_ADDRESS;
 
 // For Hardhat
 const contract = require("../artifacts/contracts/blockchain_contract.sol/BlockChain_DNS.json");
+console.log(JSON.stringify(contract.abi));
 
 // provider - Alchemy
 const alchemyProvider = new ethers.providers.AlchemyProvider(network="goerli", API_KEY);
@@ -18,15 +19,15 @@ const blockchain_dns = new ethers.Contract(CONTRACT_ADDRESS, contract.abi, signe
 
 // interact with blockchain_dns
 async function main() {
-    const message = await blockchaindnscontract.message();
-    console.log("The message is:", + message);
+    const message = await blockchain_dns.message();
+    console.log("The message is:" + message);
 
     console.log("Updating the message...");
-    const tx = await blockchaindnscontract.update("This is the new message!");
+    const tx = await blockchain_dns.update("This is the new message!");
     await tx.wait();
 
-    const newMessage = await blockchaindnscontract.message();
-    console.log("The new message is:", + newMessage);
+    const newMessage = await blockchain_dns.message();
+    console.log("The new message is:" + newMessage);
 }
 
 main();
