@@ -18,6 +18,9 @@ contract BlockChain_DNS {
     // Add an array to store all IP addresses
     string[] public ipAddresses;
 
+    // Add an array to store all domain names
+    string[] public domainNames;
+
     // Mapping of IP addresses to domains
     mapping(string => Domain) public domains;
 
@@ -67,6 +70,16 @@ contract BlockChain_DNS {
             return false;
         }
         return true;
+    }
+
+    // Function to get all domains
+    function getAllDomains() public view returns (string[] memory) {
+        string[] memory allDomains = new string[](ipAddresses.length);
+        for (uint i = 0; i < ipAddresses.length; i++) {
+            Domain storage domainObj = domains[ipAddresses[i]];
+            allDomains[i] = domainObj.domain;
+        }
+        return allDomains;
     }
 
     // Function to get domains by domain name
@@ -131,27 +144,9 @@ contract BlockChain_DNS {
         baseCompanyWallet = newOwner;
     }
 
-    // Function to withdraw funds from the contract
-    function withdraw() public onlyBaseCompany {
-        payable(baseCompanyWallet).transfer(address(this).balance);
-    }
-
-    // Function to deposit funds into the contract
-    function deposit() public payable onlyBaseCompany {}
-
-    // Function to get the contract balance
-    function getBalance() public view returns (uint256) {
-        return address(this).balance;
-    }
-
     // Function to get the contract address
     function getContractAddress() public view returns (address) {
         return address(this);
-    }
-
-    // Function to get the base company wallet
-    function getBaseCompanyWallet() public view returns (address) {
-        return baseCompanyWallet;
     }
    
 }
