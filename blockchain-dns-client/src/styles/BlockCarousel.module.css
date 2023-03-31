@@ -1,15 +1,23 @@
-.blockCarousel {
+.blockCarouselContainer {
     --blockWidth: 500px;
     --blockHeight: 300px;
 
     display: flex;
     flex-direction: row;
-    justify-content: center;
     align-items: center;
     width: 100%;
     background-color: #000000;
-
+    margin: 3rem 0;
     overflow: hidden;
+}
+
+.blockCarousel {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    background-color: #000000;
+    width: calc(100% - 240px);
+    margin: auto;
 }
 
 .block {
@@ -20,6 +28,9 @@
     border: 1px solid #ffffff;
     border-radius: 10px;
     padding: 10px 30px 10px 30px;
+    margin: 0 30px 0 30px;
+    user-select: none;
+    transition: translate 500ms ease-in-out, border-top-color 500ms ease-in-out, border-right-color 500ms ease-in-out, border-bottom-color 500ms ease-in-out, border-left-color 500ms ease-in-out;
 }
 
 .block .domain {
@@ -41,6 +52,39 @@
     font-weight: 300;
 }
 
+.block .info-row + .info-row {
+    margin-top: 10px;
+}
+
 .block .info-row svg {
     margin-right: 10px;
+}
+
+.block .info-row .info {
+    overflow-x: hidden;
+    text-overflow: ellipsis;
+}
+
+.blockCarouselContainer .carousel-control {
+    z-index: 1;
+    min-width: 70px;
+    height: 70px;
+    background-color: cyan;
+    border-radius: 50%;
+    border: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.carousel-control.prev {
+    margin-left: 50px;
+}
+
+.carousel-control.next {
+    margin-right: 50px;
+}
+
+.carousel-control.disabled {
+    visibility: hidden;
 }

@@ -1,0 +1,88 @@
+.loading-container {
+    display: flex;
+    position: fixed;
+    overflow: hidden;
+    width: 100vw;
+    height: 100vh;
+    z-index: 2;
+}
+
+.background {
+    background-color: white;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    margin: auto;
+    animation: expand 750ms ease-in forwards;
+}
+
+.background.disappear {
+    transform: scale(300, 300);
+    animation: shrink 750ms 250ms ease-in forwards;
+}
+
+.loading-container :global(.loading-circle) {
+    position: fixed;
+    top: calc(50% - 148px);
+    left: calc(50% - 62px);
+    opacity: 0;
+    animation: appear 500ms 500ms ease-in forwards, infinite 2s alternate-reverse ease-in-out rotate;
+}
+
+.loading-container :global(.loading-circle).disappear {
+    opacity: 1;
+    animation: disappear 500ms ease-in forwards, infinite 2s alternate-reverse ease-in-out rotate;
+}
+
+@keyframes expand {
+    0% {
+        transform: scale(0, 0);
+    }
+    100% {
+        transform: scale(300, 300);
+    }
+}
+
+@keyframes shrink {
+    0% {
+        transform: scale(300, 300);
+    }
+    100% {
+        transform: scale(0, 0);
+    }
+}
+
+@keyframes appear {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes disappear {
+    0% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
+}
+
+@keyframes rotate {
+    0% {
+        transform: rotate(0deg);
+        color: cyan;
+    }
+    33% {
+        color: orchid;
+    }
+    66% {
+        color: yellow;
+    }
+    100% {
+        transform: rotate(1440deg);
+        color: greenyellow;
+    }
+}
