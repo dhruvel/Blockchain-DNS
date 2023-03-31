@@ -15,6 +15,9 @@ contract BlockChain_DNS {
         uint256 expiration;
     }
 
+    // Add an array to store all IP addresses
+    string[] public ipAddresses;
+
     // Mapping of IP addresses to domains
     mapping(string => Domain) public domains;
 
@@ -53,4 +56,63 @@ contract BlockChain_DNS {
     function addDomain(string memory ipAddr, string memory domain, string memory ipAddrType, uint256 timestamp, uint256 expiration) public onlyAuthCompanies {
         domains[ipAddr] = Domain(domain, ipAddrType, timestamp, expiration);
     }
+
+    // Function to return all IP addresses
+    function getIpAddresses() public view returns (string[] memory) {
+        return ipAddresses;
+    }
+
+    // Function to add an IP address
+    function addIpAddress(string memory ipAddr) public onlyAuthCompanies {
+        ipAddresses.push(ipAddr);
+    }
+
+    // Function to remove an IP address
+    function removeIpAddress(string memory ipAddr) public onlyAuthCompanies {
+        for (uint i = 0; i < ipAddresses.length; i++) {
+            if (keccak256(abi.encodePacked(ipAddresses[i])) == keccak256(abi.encodePacked(ipAddr))) {
+                delete ipAddresses[i];
+            }
+        }
+    }
+
+    // Function to remove a domain
+    function removeDomain(string memory ipAddr) public onlyAuthCompanies {
+        delete domains[ipAddr];
+    }
+
+    // Function to remove an authorized company wallet
+    function removeAuthCompany(address wallet) public onlyBaseCompany {
+        delete authCompanies[wallet];
+    }
+
+    // Function to transfer ownership of the contract
+    function transferOwnership(address newOwner) public onlyBaseCompany {
+        baseCompanyWallet = newOwner;
+    }
+
+    // Function to withdraw funds from the contract
+    function withdraw() public onlyBaseCompany {
+        payable(baseCompanyWallet).transfer(address(this).balance);
+    }
+
+    // Function to deposit funds into the contract
+    function deposit() public payable onlyBaseCompany {}
+
+    // Function to get the contract balance
+    function getBalance() public view returns (uint256) {
+        return address(this).balance;
+    }
+
+    // Function to get the contract address
+    function getContractAddress() public view returns (address) {
+        return address(this);
+    }
+
+    // Function to get the base company wallet
+    function getBaseCompanyWallet() public view returns (address) {
+        return baseCompanyWallet;
+    }
+
+   
 }
