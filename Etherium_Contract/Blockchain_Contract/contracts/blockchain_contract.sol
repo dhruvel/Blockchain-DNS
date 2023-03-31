@@ -2,30 +2,54 @@
 // Learn more: https://solidity.readthedocs.io/en/v0.5.10/layout-of-source-files.html#pragma
 pragma solidity >=0.7.3;
 
-// Defines a contract named `BlockChain_DNS`.
-// A contract is a collection of functions and data (its state). Once deployed, a contract resides at a specific address on the Ethereum blockchain. Learn more: https://solidity.readthedocs.io/en/v0.5.10/structure-of-a-contract.html
 contract BlockChain_DNS {
+    // Define the base company wallet
+    address public baseCompanyWallet;
 
-   //Emitted when update function is called
-   //Smart contract events are a way for your contract to communicate that something happened on the blockchain to your app front-end, which can be 'listening' for certain events and take action when they happen.
-   event UpdatedMessages(string oldStr, string newStr);
+    // Define a struct to represent a domain
+    struct Domain {
+        string domain;
+        string ipAddrType;
+        uint256 timestamp;
+        uint256 expiration;
+    }
 
-   // Declares a state variable `message` of type `string`.
-   // State variables are variables whose values are permanently stored in contract storage. The keyword `public` makes variables accessible from outside a contract and creates a function that other contracts or clients can call to access the value.
-   string public message;
+    // Mapping of IP addresses to domains
+    mapping(string => Domain) public domains;
 
-   // Similar to many class-based object-oriented languages, a constructor is a special function that is only executed upon contract creation.
-   // Constructors are used to initialize the contract's data. Learn more:https://solidity.readthedocs.io/en/v0.5.10/contracts.html#constructors
-   constructor(string memory initMessage) {
+    // Mapping of authorized company wallets
+    mapping(address => bool) public authCompanies;
 
-      // Accepts a string argument `initMessage` and sets the value into the contract's `message` storage variable).
-      message = initMessage;
-   }
+    // Modifier to restrict access to the base company wallet
+    modifier onlyBaseCompany() {
+        require(msg.sender == baseCompanyWallet, "Only the base company wallet can call this function");
+        _;
+    }
 
-   // A public function that accepts a string argument and updates the `message` storage variable.
-   function update(string memory newMessage) public {
-      string memory oldMsg = message;
-      message = newMessage;
-      emit UpdatedMessages(oldMsg, newMessage);
-   }
+    // Constructor to initialize the base company wallet
+    constructor(address _baseCompanyWallet) {
+        baseCompanyWallet = _baseCompanyWallet;
+    }
+
+    // Function to get a domain by IP address
+    function getDomain(string memory ipAddr) public view returns (string memory, string memory, uint256, uint256) {
+        Domain storage domain = domains[ipAddr];
+        return (domain.domain, domain.ipAddrType, domain.timestamp, domain.expiration);
+    }
+
+    // Function to add an authorized company wallet
+    function addAuthCompany(address wallet) public onlyBaseCompany {
+        authCompanies[wallet] = true;
+    }
+
+    // Modifier to restrict access to authorized company wallets
+    modifier onlyAuthCompanies() {
+        require(authCompanies[msg.sender], "Only authorized company wallets can call this function");
+        _;
+    }
+
+    // Function to add a domain
+    function addDomain(string memory ipAddr, string memory domain, string memory ipAddrType, uint256 timestamp, uint256 expiration) public onlyAuthCompanies {
+        domains[ipAddr] = Domain(domain, ipAddrType, timestamp, expiration);
+    }
 }
