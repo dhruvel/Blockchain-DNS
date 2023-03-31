@@ -9,6 +9,7 @@ contract BlockChain_DNS {
 
     // Define a struct to represent a domain
     struct Domain {
+        string ipAddr;
         string domain;
         string ipAddrType;
         uint256 timestamp;
@@ -17,9 +18,6 @@ contract BlockChain_DNS {
 
     // Add an array to store all IP addresses
     string[] public ipAddresses;
-
-    // Add an array to store all domain names
-    string[] public domainNames;
 
     // Mapping of IP addresses to domains
     mapping(string => Domain) public domains;
@@ -57,19 +55,8 @@ contract BlockChain_DNS {
 
     // Function to add a domain
     function addDomain(string memory ipAddr, string memory domain, string memory ipAddrType, uint256 timestamp, uint256 expiration) public onlyAuthCompanies {
-        domains[ipAddr] = Domain(domain, ipAddrType, timestamp, expiration);
-    }
-
-    // Function to check if an IP address is authorized
-    function isAuthorized(string memory ipAddr) public view returns (bool) {
-        Domain storage domain = domains[ipAddr];
-        if (domain.timestamp == 0) {
-            return false;
-        }
-        if (domain.expiration < block.timestamp) {
-            return false;
-        }
-        return true;
+        domains[ipAddr] = Domain(ipAddr, domain, ipAddrType, timestamp, expiration);
+        ipAddresses.push(ipAddr);
     }
 
     // Function to get all domains
@@ -108,16 +95,6 @@ contract BlockChain_DNS {
             }
         }
         return domainsByIpAddrType;
-    }
-
-    // Function to return all IP addresses
-    function getIpAddresses() public view returns (string[] memory) {
-        return ipAddresses;
-    }
-
-    // Function to add an IP address
-    function addIpAddress(string memory ipAddr) public onlyAuthCompanies {
-        ipAddresses.push(ipAddr);
     }
 
     // Function to remove an IP address
