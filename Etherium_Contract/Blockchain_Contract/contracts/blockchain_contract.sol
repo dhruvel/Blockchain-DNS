@@ -59,42 +59,22 @@ contract BlockChain_DNS {
         ipAddresses.push(ipAddr);
     }
 
-    // Function to get all domains
-    function getAllDomains() public view returns (string[] memory) {
+    // Function to get all domains and everything about them
+    function getAllDomains() public view returns (string[] memory, string[] memory, string[] memory, uint256[] memory, uint256[] memory) {
         string[] memory allDomains = new string[](ipAddresses.length);
+        string[] memory allIpAddrTypes = new string[](ipAddresses.length);
+        string[] memory allIpAddrs = new string[](ipAddresses.length);
+        uint256[] memory allTimestamps = new uint256[](ipAddresses.length);
+        uint256[] memory allExpirations = new uint256[](ipAddresses.length);
         for (uint i = 0; i < ipAddresses.length; i++) {
             Domain storage domainObj = domains[ipAddresses[i]];
             allDomains[i] = domainObj.domain;
+            allIpAddrTypes[i] = domainObj.ipAddrType;
+            allIpAddrs[i] = domainObj.ipAddr;
+            allTimestamps[i] = domainObj.timestamp;
+            allExpirations[i] = domainObj.expiration;
         }
-        return allDomains;
-    }
-
-    // Function to get domains by domain name
-    function getDomainsByDomain(string memory domain) public view returns (string[] memory) {
-        string[] memory domainsByDomain = new string[](ipAddresses.length);
-        uint256 index = 0;
-        for (uint i = 0; i < ipAddresses.length; i++) {
-            Domain storage domainObj = domains[ipAddresses[i]];
-            if (keccak256(abi.encodePacked(domainObj.domain)) == keccak256(abi.encodePacked(domain))) {
-                domainsByDomain[index] = ipAddresses[i];
-                index++;
-            }
-        }
-        return domainsByDomain;
-    }
-
-    // Function to get domains by IP address type
-    function getDomainsByIpAddrType(string memory ipAddrType) public view returns (string[] memory) {
-        string[] memory domainsByIpAddrType = new string[](ipAddresses.length);
-        uint256 index = 0;
-        for (uint i = 0; i < ipAddresses.length; i++) {
-            Domain storage domainObj = domains[ipAddresses[i]];
-            if (keccak256(abi.encodePacked(domainObj.ipAddrType)) == keccak256(abi.encodePacked(ipAddrType))) {
-                domainsByIpAddrType[index] = ipAddresses[i];
-                index++;
-            }
-        }
-        return domainsByIpAddrType;
+        return (allDomains, allIpAddrTypes, allIpAddrs, allTimestamps, allExpirations);
     }
 
     // Function to remove an IP address
