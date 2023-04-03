@@ -21,23 +21,17 @@ const blockchain_dns = new ethers.Contract(CONTRACT_ADDRESS, contract.abi, signe
 
 // interact with blockchain_dns
 async function main() {
-    let domains = await blockchain_dns.getAllDomains();
-    console.log('Domains: ');
-    console.log(domains);
-
     console.log("Adding domain...");
-    // ip, domain, iptype, timestamp, expiration
+    // domain, ip, iptype, timestamp, expiration
     const date = new Date();
-    const tx = await blockchain_dns.addDomain('google.com', '1.2.3.4', '4', '0x8Fc5f1358Fd316609e3eBCf0338f92b6eD6DBaDF', date.getTime(), date.getTime() + 1000000);
+    const expiration = new Date();
+    expiration.setFullYear(expiration.getFullYear() + 1);
+    const tx = await blockchain_dns.addDomain('pvp.net', '1.2.3.0', '4', '0x8Fc5f1358Fd316609e3eBCf0338f92b6eD6DBaDF', date.getTime(), expiration.getTime());
     await tx.wait();
 
     domains = await blockchain_dns.getAllDomains();
     console.log("Domains: ");
     console.log(domains);
-
-    const domain = await blockchain_dns.getDomain('google.com');
-    console.log("Domain: ");
-    console.log(domain);
 }
 
 main();

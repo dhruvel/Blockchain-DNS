@@ -42,7 +42,7 @@ contract BlockChain_DNS {
     // Function to get a domain by IP address
     function getDomain(string memory domainName) public view returns (string memory, uint64 expiration) {
         Domain storage domain = domains[domainName];
-        return (domain.domain, domain.expiration);
+        return (domain.ipAddr, domain.expiration);
     }
 
     // Function to add an authorized company wallet

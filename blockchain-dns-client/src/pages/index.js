@@ -30,12 +30,27 @@ export default function Home() {
   const onAddBlock = (domain, ip, ownerId, expiryMonths) => {
     setLoading(1);
     console.log(domain, ip, ownerId, expiryMonths);
-    setTimeout(() => {
-      setLoading(2);
-      setTimeout(() => {
-        setLoading(0);
-      }, 1000);
-    }, 5000);
+    
+    fetch('api/addDomain', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        domain,
+        ip,
+        ownerId,
+        expiryMonths,
+      })
+    }).then(res => {
+      res.json().then(data => {
+        console.log(data);
+        setLoading(2);
+        setTimeout(() => {
+          setLoading(0);
+        }, 1000);
+      });
+    });
   };
 
   return (
