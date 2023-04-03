@@ -43,8 +43,8 @@ export default function Home() {
         expiryMonths,
       })
     }).then(res => {
-      res.json().then(data => {
-        console.log(data);
+      res.json().then(domain => {
+        setDomains([...domains, domain]);
         setLoading(2);
         setTimeout(() => {
           setLoading(0);

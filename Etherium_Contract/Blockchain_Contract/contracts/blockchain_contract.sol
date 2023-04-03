@@ -21,7 +21,7 @@ contract BlockChain_DNS {
     // Add an array to store all domain names
     string[] public domainNames;
 
-    // Mapping of IP addresses to domains
+    // Mapping of domain names to domains
     mapping(string => Domain) public domains;
 
     // Mapping of authorized company wallets
@@ -57,9 +57,10 @@ contract BlockChain_DNS {
     }
 
     // Function to add a domain
-    function addDomain(string memory domain, string memory ipAddr, string memory ipAddrType, address ownerId, uint64 timestamp, uint64 expiration) public onlyAuthCompanies {
+    function addDomain(string memory domain, string memory ipAddr, string memory ipAddrType, address ownerId, uint64 timestamp, uint64 expiration) public onlyAuthCompanies returns (Domain memory) {
         domains[domain] = Domain(domain, ipAddr, ipAddrType, ownerId, msg.sender, timestamp, expiration);
         domainNames.push(domain);
+        return domains[domain];
     }
 
     // Function to get all domains
