@@ -1,10 +1,12 @@
 from __future__ import annotations as _annotations
 
 import logging
+import time
 from datetime import datetime
 from pathlib import Path
 from textwrap import wrap
 from typing import Any, List
+from web3 import Web3, AsyncWeb3
 
 import random
 
@@ -25,6 +27,23 @@ handler.setFormatter(logging.Formatter('%(asctime)s: %(message)s', datefmt='%H:%
 logger = logging.getLogger(__name__)
 logger.addHandler(handler)
 logger.setLevel(logging.INFO)
+
+#  Connect to the blockchain
+w3 = Web3(Web3.HTTPProvider("https://eth-sepolia.g.alchemy.com/v2/jBy_7tzy_IZu2tALKlYFrRWW2Ff_ae3r"))
+
+# Configure the contract
+contract_address = "0x627093F3a818606817ae3E6cf893C070255d3f16"
+contract_abi = '[{"inputs":[],"stateMutability":"nonpayable","type":"constructor"},{"inputs":[{"internalType":"address","name":"wallet","type":"address"}],"name":"addAuthCompany","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"string","name":"ipAddr","type":"string"},{"internalType":"string","name":"domain","type":"string"},{"internalType":"string","name":"ipAddrType","type":"string"},{"internalType":"address","name":"ownerId","type":"address"},{"internalType":"uint64","name":"timestamp","type":"uint64"},{"internalType":"uint64","name":"expiration","type":"uint64"}],"name":"addDomain","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"","type":"address"}],"name":"authCompanies","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"baseCompanyWallet","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"string","name":"","type":"string"}],"name":"domains","outputs":[{"internalType":"string","name":"ipAddr","type":"string"},{"internalType":"string","name":"domain","type":"string"},{"internalType":"string","name":"ipAddrType","type":"string"},{"internalType":"address","name":"ownerId","type":"address"},{"internalType":"address","name":"authCompanyId","type":"address"},{"internalType":"uint64","name":"timestamp","type":"uint64"},{"internalType":"uint64","name":"expiration","type":"uint64"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"getAllDomains","outputs":[{"components":[{"internalType":"string","name":"ipAddr","type":"string"},{"internalType":"string","name":"domain","type":"string"},{"internalType":"string","name":"ipAddrType","type":"string"},{"internalType":"address","name":"ownerId","type":"address"},{"internalType":"address","name":"authCompanyId","type":"address"},{"internalType":"uint64","name":"timestamp","type":"uint64"},{"internalType":"uint64","name":"expiration","type":"uint64"}],"internalType":"struct BlockChain_DNS.Domain[]","name":"","type":"tuple[]"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"string","name":"ipAddr","type":"string"}],"name":"getDomain","outputs":[{"internalType":"string","name":"","type":"string"},{"internalType":"uint64","name":"expiration","type":"uint64"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"","type":"uint256"}],"name":"ipAddresses","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"}]'
+contract_instance = w3.eth.contract(address=contract_address, abi=contract_abi)
+
+
+class Domain:
+    def __init__(self, ipAddr: str, domain: str, ipAddrType: str, timestamp: int, expiration: int):
+        self.ipAddr = ipAddr
+        self.domain = domain
+        self.ipAddrType = ipAddrType
+        self.timestamp = timestamp
+        self.expiration = expiration
 
 TYPE_LOOKUP = {
     'A': (dns.A, QTYPE.A),
@@ -110,9 +129,12 @@ def resolve(request, handler, records):
         return reply
     
 
-def query_blockchain(name: str):
-    num = random.randint(0, 255)
-    return "1.2.3." + str(num)
+def query_blockchain(ip: str):
+    domain = contract_instance.functions.getDomain(ip).call()
+    if domain[1] > int(time.time()):
+        return domain[0]
+    else :
+        return None
 
 
 class BaseResolver(LibBaseResolver):
@@ -157,7 +179,7 @@ class BlockchainResolver(LibProxyResolver):
         type_name = QTYPE[request.q.qtype]
         logger.info('no local zone found, querying blockchain for %s[%s]', request.q.qname, type_name)
         
-        query = query_blockchain(request.q.ip)
+        query = query_blockchain(str(request.q.qname))
         if query:
             # Save response to local zones
             self.records.zones.append(Zone(host=request.q.qname, type=type_name, answer=query))
