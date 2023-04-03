@@ -1,12 +1,12 @@
 {
   "_format": "hh-sol-cache-2",
   "files": {
-    "C:\\Users\\dhruv\\OneDrive - Wilfrid Laurier University\\Work\\CP 400S\\final project\\Blockchain-DNS\\Etherium_Contract\\Blockchain_Contract\\contracts\\blockchain_contract.sol": {
-      "lastModificationDate": 1680130008297,
-      "contentHash": "b341bc59174873c7e69c03b54fea29e8",
+    "C:\\Users\\pablo\\Desktop\\Blockchain-DNS\\Etherium_Contract\\Blockchain_Contract\\contracts\\blockchain_contract.sol": {
+      "lastModificationDate": 1680535669441,
+      "contentHash": "90a3f6988d76699362d4ee5ee4286fc0",
       "sourceName": "contracts/blockchain_contract.sol",
       "solcConfig": {
-        "version": "0.7.3",
+        "version": "0.8.19",
         "settings": {
           "optimizer": {
             "enabled": false,
@@ -30,7 +30,7 @@
       },
       "imports": [],
       "versionPragmas": [
-        ">=0.7.3"
+        ">=0.8.19"
       ],
       "artifacts": [
         "BlockChain_DNS"

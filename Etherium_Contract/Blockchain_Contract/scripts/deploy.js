@@ -3,7 +3,7 @@ async function main() {
   const Blockchain_DNS = await ethers.getContractFactory("BlockChain_DNS");
   
   // Start deployment, returning a promise that resolves to a contract object
-  const blockchain_dns = await Blockchain_DNS.deploy("Hello, World!");
+  const blockchain_dns = await Blockchain_DNS.deploy();
   console.log("Blockchain_DNS deployed to:", blockchain_dns.address);
 }
 

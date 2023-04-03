@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: UNLICENSED
 // Specifies the version of Solidity, using semantic versioning.
 // Learn more: https://solidity.readthedocs.io/en/v0.5.10/layout-of-source-files.html#pragma
-pragma solidity >=0.7.3;
+pragma solidity >=0.8.19;
 
 contract BlockChain_DNS {
     // Define the base company wallet
@@ -32,8 +32,9 @@ contract BlockChain_DNS {
     }
 
     // Constructor to initialize the base company wallet
-    constructor(address _baseCompanyWallet) {
-        baseCompanyWallet = _baseCompanyWallet;
+    constructor() {
+        baseCompanyWallet = msg.sender;
+        authCompanies[baseCompanyWallet] = true;
     }
 
     // Function to get a domain by IP address
@@ -60,70 +61,13 @@ contract BlockChain_DNS {
     }
 
     // Function to get all domains
-    function getAllDomains() public view returns (string[] memory) {
-        string[] memory allDomains = new string[](ipAddresses.length);
+    function getAllDomains() public view returns (Domain[] memory) {
+        Domain[] memory allDomains = new Domain[](ipAddresses.length);
         for (uint i = 0; i < ipAddresses.length; i++) {
             Domain storage domainObj = domains[ipAddresses[i]];
-            allDomains[i] = domainObj.domain;
+            allDomains[i] = domainObj;
         }
         return allDomains;
-    }
-
-    // Function to get domains by domain name
-    function getDomainsByDomain(string memory domain) public view returns (string[] memory) {
-        string[] memory domainsByDomain = new string[](ipAddresses.length);
-        uint256 index = 0;
-        for (uint i = 0; i < ipAddresses.length; i++) {
-            Domain storage domainObj = domains[ipAddresses[i]];
-            if (keccak256(abi.encodePacked(domainObj.domain)) == keccak256(abi.encodePacked(domain))) {
-                domainsByDomain[index] = ipAddresses[i];
-                index++;
-            }
-        }
-        return domainsByDomain;
-    }
-
-    // Function to get domains by IP address type
-    function getDomainsByIpAddrType(string memory ipAddrType) public view returns (string[] memory) {
-        string[] memory domainsByIpAddrType = new string[](ipAddresses.length);
-        uint256 index = 0;
-        for (uint i = 0; i < ipAddresses.length; i++) {
-            Domain storage domainObj = domains[ipAddresses[i]];
-            if (keccak256(abi.encodePacked(domainObj.ipAddrType)) == keccak256(abi.encodePacked(ipAddrType))) {
-                domainsByIpAddrType[index] = ipAddresses[i];
-                index++;
-            }
-        }
-        return domainsByIpAddrType;
-    }
-
-    // Function to remove an IP address
-    function removeIpAddress(string memory ipAddr) public onlyAuthCompanies {
-        for (uint i = 0; i < ipAddresses.length; i++) {
-            if (keccak256(abi.encodePacked(ipAddresses[i])) == keccak256(abi.encodePacked(ipAddr))) {
-                delete ipAddresses[i];
-            }
-        }
-    }
-
-    // Function to remove a domain
-    function removeDomain(string memory ipAddr) public onlyAuthCompanies {
-        delete domains[ipAddr];
-    }
-
-    // Function to remove an authorized company wallet
-    function removeAuthCompany(address wallet) public onlyBaseCompany {
-        delete authCompanies[wallet];
-    }
-
-    // Function to transfer ownership of the contract
-    function transferOwnership(address newOwner) public onlyBaseCompany {
-        baseCompanyWallet = newOwner;
-    }
-
-    // Function to get the contract address
-    function getContractAddress() public view returns (address) {
-        return address(this);
     }
    
 }

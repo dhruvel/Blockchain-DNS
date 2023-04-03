@@ -9,25 +9,35 @@ const contract = require("../artifacts/contracts/blockchain_contract.sol/BlockCh
 console.log(JSON.stringify(contract.abi));
 
 // provider - Alchemy
-const alchemyProvider = new ethers.providers.AlchemyProvider(network="goerli", API_KEY);
+//const alchemyProvider = new ethers.providers.AlchemyProvider(network='sepolia', API_KEY);
+const node = "https://rpc.sepolia.org";
+const provider = new ethers.providers.JsonRpcProvider(node);
 
 // signer - you
-const signer = new ethers.Wallet(PRIVATE_KEY, alchemyProvider);
+const signer = new ethers.Wallet(PRIVATE_KEY, provider);
 
 // contract - blockchain_dns
 const blockchain_dns = new ethers.Contract(CONTRACT_ADDRESS, contract.abi, signer);
 
 // interact with blockchain_dns
 async function main() {
-    const message = await blockchain_dns.message();
-    console.log("The message is:" + message);
+    let domains = await blockchain_dns.getAllDomains();
+    console.log('Domains: ');
+    console.log(domains);
 
-    console.log("Updating the message...");
-    const tx = await blockchain_dns.update("This is the new message!");
+    console.log("Adding domain...");
+    // ip, domain, iptype, timestamp, expiration
+    const date = new Date();
+    const tx = await blockchain_dns.addDomain('1.2.3.4', 'google.com', '4', date.getTime(), date.getTime() + 1000000);
     await tx.wait();
 
-    const newMessage = await blockchain_dns.message();
-    console.log("The new message is:" + newMessage);
+    domains = await blockchain_dns.getAllDomains();
+    console.log("Domains: ");
+    console.log(domains);
+
+    const domain = await blockchain_dns.getDomain('1.2.3.4');
+    console.log("Domain: ");
+    console.log(domain);
 }
 
 main();
