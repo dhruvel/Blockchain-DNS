@@ -8,6 +8,7 @@ import SubmitLoad from '@/components/SubmitLoad';
 
 export default function Home() {
   const [loading, setLoading] = useState(0);
+  const [domains, setDomains] = useState([]);
   const [walletAddress, setWallet] = useState('');
 
   useEffect(() => {
@@ -16,6 +17,15 @@ export default function Home() {
         setWallet(accounts[0]);
       });
     }
+  }, []);
+
+  useEffect(() => {
+    fetch('api/domains').then(res => {
+      res.json().then(domains => {
+        console.log(domains);
+        setDomains(domains);
+      });
+    });
   }, []);
 
   const onAddBlock = (domain, ip, ownerId, expiryMonths) => {
@@ -42,7 +52,7 @@ export default function Home() {
       }
       <main className={styles.main}>
         <h1>Blockchain DNS</h1>
-        <BlockCarousel />
+        <BlockCarousel blocks={domains} />
         <AddBlockForm onSubmit={onAddBlock.bind(this)} authCompanyId={walletAddress} />
       </main>
     </>

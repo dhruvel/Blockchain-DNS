@@ -157,7 +157,7 @@ class BlockchainResolver(LibProxyResolver):
         type_name = QTYPE[request.q.qtype]
         logger.info('no local zone found, querying blockchain for %s[%s]', request.q.qname, type_name)
         
-        query = query_blockchain(request.q.qname)
+        query = query_blockchain(request.q.ip)
         if query:
             # Save response to local zones
             self.records.zones.append(Zone(host=request.q.qname, type=type_name, answer=query))

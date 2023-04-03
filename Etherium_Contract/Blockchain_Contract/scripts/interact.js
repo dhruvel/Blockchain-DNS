@@ -28,7 +28,7 @@ async function main() {
     console.log("Adding domain...");
     // ip, domain, iptype, timestamp, expiration
     const date = new Date();
-    const tx = await blockchain_dns.addDomain('1.2.3.4', 'google.com', '4', date.getTime(), date.getTime() + 1000000);
+    const tx = await blockchain_dns.addDomain('1.2.3.4', 'google.com', '4', '0x8Fc5f1358Fd316609e3eBCf0338f92b6eD6DBaDF', date.getTime(), date.getTime() + 1000000);
     await tx.wait();
 
     domains = await blockchain_dns.getAllDomains();

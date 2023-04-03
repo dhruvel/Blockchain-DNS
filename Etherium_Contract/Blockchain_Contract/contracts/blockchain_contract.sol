@@ -12,8 +12,10 @@ contract BlockChain_DNS {
         string ipAddr;
         string domain;
         string ipAddrType;
-        uint256 timestamp;
-        uint256 expiration;
+        address ownerId;
+        address authCompanyId;
+        uint64 timestamp;
+        uint64 expiration;
     }
 
     // Add an array to store all IP addresses
@@ -38,9 +40,9 @@ contract BlockChain_DNS {
     }
 
     // Function to get a domain by IP address
-    function getDomain(string memory ipAddr) public view returns (string memory, string memory, uint256, uint256) {
+    function getDomain(string memory ipAddr) public view returns (string memory, uint64 expiration) {
         Domain storage domain = domains[ipAddr];
-        return (domain.domain, domain.ipAddrType, domain.timestamp, domain.expiration);
+        return (domain.domain, domain.expiration);
     }
 
     // Function to add an authorized company wallet
@@ -55,8 +57,8 @@ contract BlockChain_DNS {
     }
 
     // Function to add a domain
-    function addDomain(string memory ipAddr, string memory domain, string memory ipAddrType, uint256 timestamp, uint256 expiration) public onlyAuthCompanies {
-        domains[ipAddr] = Domain(ipAddr, domain, ipAddrType, timestamp, expiration);
+    function addDomain(string memory ipAddr, string memory domain, string memory ipAddrType, address ownerId, uint64 timestamp, uint64 expiration) public onlyAuthCompanies {
+        domains[ipAddr] = Domain(ipAddr, domain, ipAddrType, ownerId, msg.sender, timestamp, expiration);
         ipAddresses.push(ipAddr);
     }
 
