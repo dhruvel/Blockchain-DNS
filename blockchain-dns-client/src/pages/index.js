@@ -29,7 +29,6 @@ export default function Home() {
 
   const onAddBlock = (domain, ip, ownerId, expiryMonths) => {
     setLoading(1);
-    console.log(domain, ip, ownerId, expiryMonths);
     
     fetch('api/addDomain', {
       method: 'POST',
@@ -44,6 +43,7 @@ export default function Home() {
       })
     }).then(res => {
       res.json().then(domain => {
+        domain.authCompanyId = walletAddress;
         setDomains([...domains, domain]);
         setLoading(2);
         setTimeout(() => {

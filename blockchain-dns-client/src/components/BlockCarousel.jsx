@@ -30,7 +30,7 @@ export default function BlockCarousel({ blocks }) {
                 {
                     blocks.map((block, index) => (
                         <div
-                            key={`${block.domain}-${block.ipAddr}`}
+                            key={`${block.domain}-${block.ipAddr}-${block.timestamp}`}
                             className={`${styles.block} ${blocks.length - 1 + translateX === index ? 'border-glow' : '' }`}
                             style={{
                                 translate: `calc(((-250px - 30px) * ${blocks.length - 1}) + ((-500px - 60px) * ${translateX}))`
