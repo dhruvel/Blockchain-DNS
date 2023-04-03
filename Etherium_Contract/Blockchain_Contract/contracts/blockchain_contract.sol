@@ -68,6 +68,5 @@ contract BlockChain_DNS {
             allDomains[i] = domainObj;
         }
         return allDomains;
-    }
-   
+    }   
 }
