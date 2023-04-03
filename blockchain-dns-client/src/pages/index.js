@@ -22,7 +22,6 @@ export default function Home() {
   useEffect(() => {
     fetch('api/domains').then(res => {
       res.json().then(domains => {
-        console.log(domains);
         setDomains(domains);
       });
     });

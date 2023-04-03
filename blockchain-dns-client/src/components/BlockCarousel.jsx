@@ -40,15 +40,15 @@ export default function BlockCarousel({ blocks }) {
                             <span className={styles.ip}>{block.ipAddr}</span>
                             <div className={styles['info-row']}>
                                 <ImProfile size={32}/>
-                                <span>{block.ownerId}</span>
+                                <span className={styles.info}>{block.ownerId}</span>
                             </div>
                             <div className={styles['info-row']}>
                                 <BsShieldFillCheck size={32}/>
-                                <span>{block.authCompanyId}</span>
+                                <span className={styles.info}>{block.authCompanyId}</span>
                             </div>
                             <div className={styles['info-row']}>
                                 <BsFillClockFill size={32}/>
-                                <span>{block.expiration}</span>
+                                <span className={styles.info}>{new Date(block.expiration).toDateString()}</span>
                             </div>
                         </div>
                     ))

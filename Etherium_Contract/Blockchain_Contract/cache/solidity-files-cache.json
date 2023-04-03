@@ -2,8 +2,8 @@
   "_format": "hh-sol-cache-2",
   "files": {
     "C:\\Users\\pablo\\Desktop\\Blockchain-DNS\\Etherium_Contract\\Blockchain_Contract\\contracts\\blockchain_contract.sol": {
-      "lastModificationDate": 1680543640409,
-      "contentHash": "06afc1a5d59bfe9bf3b39ad0e541c7da",
+      "lastModificationDate": 1680546366744,
+      "contentHash": "bd4ad37db970736819f23a088b5cda65",
       "sourceName": "contracts/blockchain_contract.sol",
       "solcConfig": {
         "version": "0.8.19",
