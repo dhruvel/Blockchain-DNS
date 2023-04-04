@@ -225,7 +225,7 @@ class DNSServer:
       #  else:
       #      logger.info('starting DNS server on port %d, without upstream DNS server', self.port)
       #      resolver = BaseResolver(self.records)
-        logger.info('starting DNS server on port %d, with blockchain at %s', self.port, BLOCKCHAIN_URL)
+        logger.info('starting DNS server on port %d with blockchain', self.port)
         resolver = BlockchainResolver(self.records)
 
         self.udp_server = LibDNSServer(resolver, port=self.port)
