@@ -44,7 +44,17 @@ export default function Home() {
     }).then(res => {
       res.json().then(domain => {
         domain.authCompanyId = walletAddress;
-        setDomains([...domains, domain]);
+        if(!domains.find(d => d.domain === domain.domain)) {
+          setDomains([...domains, domain]);
+        }else{
+          setDomains(domains.map(d => {
+            if(d.domain === domain.domain) {
+              return domain;
+            }
+            return d;
+          }));
+        }
+
         setLoading(2);
         setTimeout(() => {
           setLoading(0);
