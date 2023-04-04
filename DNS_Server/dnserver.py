@@ -130,7 +130,7 @@ def resolve(request, handler, records):
 
 def query_blockchain(ip: str):
     domain = contract_instance.functions.getDomain(ip[:-1]).call()
-    if domain[1] > int(time.time()):
+    if int(domain[1]) > int(time.time() * 1000):
         return domain[0]
     else :
         return None
